@@ -14,34 +14,56 @@ const currencies = {
 
 const fromCurrency = document.getElementById("fromCurrency");
 const toCurrency = document.getElementById("toCurrency");
+const amountInput = document.getElementById("amount");
+const resultDiv = document.getElementById("result");
+const sound = document.getElementById("sound");
 
+/* Populate dropdowns */
 for (let code in currencies) {
-  fromCurrency.innerHTML += `<option value="${code}">${currencies[code]} ${code}</option>`;
-  toCurrency.innerHTML += `<option value="${code}">${currencies[code]} ${code}</option>`;
+  const option = `${currencies[code]} ${code}`;
+  fromCurrency.innerHTML += `<option value="${code}">${option}</option>`;
+  toCurrency.innerHTML += `<option value="${code}">${option}</option>`;
 }
 
 fromCurrency.value = "USD";
 toCurrency.value = "GHS";
 
+/* Convert Function */
 async function convertCurrency() {
-  const amount = document.getElementById("amount").value;
+  const amount = Number(amountInput.value);
+
   if (!amount || amount <= 0) {
-    result.innerText = "Enter a valid amount";
+    resultDiv.innerText = "⚠️ Please enter a valid amount";
     return;
   }
 
-  document.getElementById("sound").play();
+  try {
+    sound.play();
 
-  const from = fromCurrency.value;
-  const to = toCurrency.value;
+    const from = fromCurrency.value;
+    const to = toCurrency.value;
 
-  const res = await fetch(`https://api.exchangerate.host/latest?base=${from}`);
-  const data = await res.json();
+    const response = await fetch(
+      `https://api.exchangerate.host/latest?base=${from}`
+    );
 
-  const converted = amount * data.rates[to];
+    if (!response.ok) {
+      throw new Error("Network error");
+    }
 
-  document.getElementById("result").innerText =
-    `${currencies[from]} ${amount} ${from} = ${currencies[to]} ${converted.toFixed(2)} ${to}`;
+    const data = await response.json();
+
+    const rate = data.rates[to];
+    const converted = amount * rate;
+
+    resultDiv.innerText =
+      `${currencies[from]} ${amount} ${from} = ` +
+      `${currencies[to]} ${converted.toFixed(2)} ${to}`;
+
+  } catch (error) {
+    resultDiv.innerText =
+      "❌ Unable to fetch live rates. Check internet connection.";
+  }
 }
 
 /* Dark Mode */
