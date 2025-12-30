@@ -2,24 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Global Currency Converter</title>
+  <title>Currency Converter</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- Slideshow -->
 <div class="slideshow">
-  <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e" class="slide active">
-  <img src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6" class="slide">
-  <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5" class="slide">
+  <img class="slide active" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e">
+  <img class="slide" src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6">
+  <img class="slide" src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5">
 </div>
 
+<!-- Converter -->
 <div class="converter">
   <div class="header">
     <h1>💱 Currency Converter</h1>
     <button onclick="toggleDarkMode()">🌙</button>
   </div>
 
-  <p class="subtitle">Live exchange rates • Flags • Ghana Cedi 🇬🇭</p>
+  <p class="subtitle">Live exchange rates • Ghana Cedi 🇬🇭</p>
 
   <input type="number" id="amount" placeholder="Enter amount">
 
@@ -31,10 +33,13 @@
 
   <button onclick="convertCurrency()">Convert</button>
 
-  <div class="result" id="result">Waiting for input...</div>
+  <!-- RESULT (NOW ALWAYS VISIBLE) -->
+  <div id="result" class="result">
+    Enter an amount and click Convert
+  </div>
 </div>
 
-<audio id="sound" src="convert.mp3.wav"></audio>
+<audio id="sound" src="convert.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
