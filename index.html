@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Global Currency Converter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="slideshow">
+  <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e" class="slide active">
+  <img src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6" class="slide">
+  <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5" class="slide">
+</div>
+
+<div class="converter">
+  <div class="header">
+    <h1>💱 Currency Converter</h1>
+    <button onclick="toggleDarkMode()">🌙</button>
+  </div>
+
+  <p class="subtitle">Live exchange rates • Flags • Ghana Cedi 🇬🇭</p>
+
+  <input type="number" id="amount" placeholder="Enter amount">
+
+  <div class="currency-group">
+    <select id="fromCurrency"></select>
+    <span>➡</span>
+    <select id="toCurrency"></select>
+  </div>
+
+  <button onclick="convertCurrency()">Convert</button>
+
+  <div class="result" id="result">Waiting for input...</div>
+</div>
+
+<audio id="sound" src="convert.mp3"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
