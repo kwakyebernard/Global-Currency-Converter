@@ -20,15 +20,14 @@ const sound = document.getElementById("sound");
 
 /* Populate dropdowns */
 for (let code in currencies) {
-  const option = `${currencies[code]} ${code}`;
-  fromCurrency.innerHTML += `<option value="${code}">${option}</option>`;
-  toCurrency.innerHTML += `<option value="${code}">${option}</option>`;
+  fromCurrency.innerHTML += `<option value="${code}">${currencies[code]} ${code}</option>`;
+  toCurrency.innerHTML += `<option value="${code}">${currencies[code]} ${code}</option>`;
 }
 
 fromCurrency.value = "USD";
 toCurrency.value = "GHS";
 
-/* Convert Function */
+/* Convert Currency */
 async function convertCurrency() {
   const amount = Number(amountInput.value);
 
@@ -37,9 +36,10 @@ async function convertCurrency() {
     return;
   }
 
-  try {
-    sound.play();
+  resultDiv.innerText = "⏳ Converting...";
+  sound.play();
 
+  try {
     const from = fromCurrency.value;
     const to = toCurrency.value;
 
@@ -47,22 +47,16 @@ async function convertCurrency() {
       `https://api.exchangerate.host/latest?base=${from}`
     );
 
-    if (!response.ok) {
-      throw new Error("Network error");
-    }
-
     const data = await response.json();
-
-    const rate = data.rates[to];
-    const converted = amount * rate;
+    const converted = amount * data.rates[to];
 
     resultDiv.innerText =
       `${currencies[from]} ${amount} ${from} = ` +
       `${currencies[to]} ${converted.toFixed(2)} ${to}`;
 
-  } catch (error) {
+  } catch {
     resultDiv.innerText =
-      "❌ Unable to fetch live rates. Check internet connection.";
+      "❌ Failed to fetch live rates. Check your internet.";
   }
 }
 
